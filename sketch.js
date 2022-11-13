@@ -18,6 +18,7 @@ function draw() {
   text(currentTime(), windowWidth - 125, windowHeight - 75);
   text(currentDate(), windowWidth - 125, windowHeight - 25);
   text("Lubbock, TX", windowWidth - 125, windowHeight - 200);
+  text("Today's News:", windowWidth - 250, 30, 250, 250);
 }
 
 function currentTime() {
@@ -57,14 +58,14 @@ function weatherCall() {
           return Response.json();
         })
         .then((data) => {
-          text(String(data.hourly.temperature_2m[curHr]) + " °F", windowWidth - 125, windowHeight - 150);
+          text(String(data.hourly.temperature_2m[curHr]) + "°F", windowWidth - 125, windowHeight - 150);
         })
     });
   }
 }
 
 function newsCall() {
-  const newsURL = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${keys.WEATHER_API_TOKEN}`
+  const newsURL = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${keys.NEWS_API_TOKEN}`
   console.log("News API: " + newsURL);
   fetch(newsURL)
     .then((Response) => {
@@ -72,9 +73,9 @@ function newsCall() {
       return Response.json();
     })
     .then((data) => {
-      textSize(12);
-      text(data.articles[0].title, windowWidth/2, windowHeight/2, 250, 250);
-      text(data.articles[1].title, windowWidth/2, (windowHeight/2) + 50, 250, 250);
-      text(data.articles[2].title, windowWidth/2, (windowHeight/2) + 100, 250, 250);
+      textSize(24);
+      text(data.articles[0].title, windowWidth - 250, 150, 250, 150);
+      text(data.articles[1].title, windowWidth - 250, 325, 250, 150);
+      text(data.articles[2].title, windowWidth - 250, 500, 250, 150);
     })
 }
