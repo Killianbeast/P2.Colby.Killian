@@ -1,11 +1,18 @@
+let capture;
+
 function setup() {
   console.log("早上好中国 现在我有冰淇淋 🥶🍦 我很喜欢冰淇淋 🥶🍦");
+  console.log("Window Width: " + windowWidth);
   createCanvas(windowWidth, windowHeight);
   background(0);
+  capture = createCapture(VIDEO);
+  capture.hide();
   fill(150);
   rect(windowWidth - 250, 0, 250, windowHeight);
+  rect(0, 0, 250, windowHeight);
   weatherCall();
   newsCall();
+  calendarCall();
 }
 
 function draw() {
@@ -15,6 +22,8 @@ function draw() {
   fill(150);
   rect(windowWidth - 250, windowHeight - 125, 250, windowHeight);
   fill(255);
+  image(capture, 250, 0, windowWidth - 500, windowHeight);
+  //text(CALENDAR)
   text(currentTime(), windowWidth - 125, windowHeight - 75);
   text(currentDate(), windowWidth - 125, windowHeight - 25);
   text("Lubbock, TX", windowWidth - 125, windowHeight - 200);
@@ -77,5 +86,20 @@ function newsCall() {
       text(data.articles[0].title, windowWidth - 250, 150, 250, 150);
       text(data.articles[1].title, windowWidth - 250, 325, 250, 150);
       text(data.articles[2].title, windowWidth - 250, 500, 250, 150);
+    })
+}
+
+function calendarCall() {
+  const d = new Date();
+  var weekDay = d.getDay();
+
+  fetch('./classes.json')
+    .then((Response) => {
+      return Response.json();
+    })
+    .then((data) => {
+      textSize(24);
+      console.log(data.WeekSchedule[weekDay].Classes);
+      text(data.WeekSchedule[weekDay].Classes, windowWidth / 2, windowHeight / 2);
     })
 }

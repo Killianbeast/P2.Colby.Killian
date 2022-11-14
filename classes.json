@@ -1,0 +1,32 @@
+{
+    "WeekSchedule" : [
+        {
+            "Day": "Sunday",
+            "Classes" : ["Nothing"]
+        },
+        {
+            "Day": "Monday",
+            "Classes" : ["Operating Systems", "\nSociology", "\nDatabases", "\nSoftware Engineering"]
+        },
+        {
+            "Day": "Tuesday",
+            "Classes" : ["Human Computer Interaction"]
+        },
+        {
+            "Day": "Wednesday",
+            "Classes" : ["Operating Systems", "\nSociology", "\nDatabases", "\nSoftware Engineering"]
+        },
+        {
+            "Day": "Thursday",
+            "Classes" : ["Human Computer Interaction"]
+        },
+        {
+            "Day": "Friday",
+            "Classes" : ["Operating Systems", "\nSociology", "\nDatabases", "\nSoftware Engineering"]
+        },
+        {
+            "Day": "Saturday",
+            "Classes" : ["Nothing"]
+        }
+    ]
+}
