@@ -7,9 +7,14 @@ function setup() {
   background(0);
   capture = createCapture(VIDEO);
   capture.hide();
-  fill(150);
+  sideColors = color(150);
+  sideColors.setAlpha(50);
+  fill(sideColors);
   rect(windowWidth - 250, 0, 250, windowHeight);
   rect(0, 0, 250, windowHeight);
+  line(windowWidth - 250, 325, windowWidth, 325);
+  line(windowWidth - 250, 500, windowWidth, 500);
+  line(windowWidth - 250, 675, windowWidth, 675)
   weatherCall();
   newsCall();
   calendarCall();
@@ -19,15 +24,15 @@ function draw() {
   fill(255);
   textSize(40);
   textAlign(CENTER);
-  fill(150);
+  fill(50);
   rect(windowWidth - 250, windowHeight - 125, 250, windowHeight);
   fill(255);
   image(capture, 250, 0, windowWidth - 500, windowHeight);
-  //text(CALENDAR)
   text(currentTime(), windowWidth - 125, windowHeight - 75);
   text(currentDate(), windowWidth - 125, windowHeight - 25);
   text("Lubbock, TX", windowWidth - 125, windowHeight - 200);
   text("Today's News:", windowWidth - 250, 30, 250, 250);
+  text("Class Schedule:", windowWidth - 250, 700, 250, 250);
 }
 
 function currentTime() {
@@ -58,23 +63,22 @@ function weatherCall() {
       lat = pos.coords.latitude;
       console.log("Longitude: " + long);
       console.log("Latitude: " + lat);
-      const curHr = String(hour());
 
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&hourly=temperature_2m&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FChicago`;
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&hourly=temperature_2m&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FChicago`;
       console.log("Weather API URL: " + url);
       fetch(url)
         .then((Response) => {
           return Response.json();
         })
         .then((data) => {
-          text(String(data.hourly.temperature_2m[curHr]) + "°F", windowWidth - 125, windowHeight - 150);
+          text(String(data.current_weather.temperature) + "°F", windowWidth - 125, windowHeight - 150);
         })
     });
   }
 }
 
 function newsCall() {
-  const newsURL = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${keys.NEWS_API_TOKEN}`
+  const newsURL = `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=${keys.NEWS_API_TOKEN}`
   console.log("News API: " + newsURL);
   fetch(newsURL)
     .then((Response) => {
@@ -84,8 +88,8 @@ function newsCall() {
     .then((data) => {
       textSize(24);
       text(data.articles[0].title, windowWidth - 250, 150, 250, 150);
-      text(data.articles[1].title, windowWidth - 250, 325, 250, 150);
-      text(data.articles[2].title, windowWidth - 250, 500, 250, 150);
+      text(data.articles[1].title, windowWidth - 250, 335, 250, 150);
+      text(data.articles[2].title, windowWidth - 250, 510, 250, 150);
     })
 }
 
@@ -100,6 +104,6 @@ function calendarCall() {
     .then((data) => {
       textSize(24);
       console.log(data.WeekSchedule[weekDay].Classes);
-      text(data.WeekSchedule[weekDay].Classes, windowWidth / 2, windowHeight / 2);
+      text(data.WeekSchedule[weekDay].Classes, windowWidth - 125, 850);
     })
 }
