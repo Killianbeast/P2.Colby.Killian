@@ -1,10 +1,14 @@
 let capture;
+let whiteBtn;
+let yellowBtn;
 
 function setup() {
   console.log("早上好中国 现在我有冰淇淋 🥶🍦 我很喜欢冰淇淋 🥶🍦");
   console.log("Window Width: " + windowWidth);
+  
   createCanvas(windowWidth, windowHeight);
   background(0);
+  
   capture = createCapture(VIDEO);
   capture.hide();
   sideColors = color(150);
@@ -12,12 +16,22 @@ function setup() {
   fill(sideColors);
   rect(windowWidth - 250, 0, 250, windowHeight);
   rect(0, 0, 250, windowHeight);
+  
   line(windowWidth - 250, 325, windowWidth, 325);
   line(windowWidth - 250, 500, windowWidth, 500);
-  line(windowWidth - 250, 675, windowWidth, 675)
-  weatherCall();
-  newsCall();
+  line(windowWidth - 250, 675, windowWidth, 675);
+
+  whiteBtn = createButton("White");
+  whiteBtn.size(125,50);
+  whiteBtn.position(0, 800);
+  yellowBtn = createButton("Yellow");
+  yellowBtn.size(125,50);
+  yellowBtn.position(125, 800);
+  
+  //weatherCall();
+  //newsCall();
   calendarCall();
+  mirrorTime();
 }
 
 function draw() {
@@ -78,7 +92,7 @@ function weatherCall() {
 }
 
 function newsCall() {
-  const newsURL = `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=${keys.NEWS_API_TOKEN}`
+  const newsURL = `https://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=${keys.NEWS_API_TOKEN}`
   console.log("News API: " + newsURL);
   fetch(newsURL)
     .then((Response) => {
@@ -104,6 +118,36 @@ function calendarCall() {
     .then((data) => {
       textSize(24);
       console.log(data.WeekSchedule[weekDay].Classes);
-      text(data.WeekSchedule[weekDay].Classes, windowWidth - 125, 850);
+      text(data.WeekSchedule[weekDay].Classes, windowWidth - 250, 850, 250, 125);
     })
 }
+
+function mirrorTime() {
+  let yest = day() - 1;
+  let twodays = day() - 2;
+  let threedays = day() - 3;
+
+  fetch('./mirrortime.json')
+    .then((Response) => {
+      return Response.json();
+    })
+    .then((data) => {
+      textSize(30);
+      text("Mirror Time Yesterday:", 0, 30, 250, 100);
+      text(`Mirror Time ${month()}/${twodays}:`, 0, 200, 250, 100);
+      text(`Mirror Time ${month()}/${threedays}:`, 0, 350, 250, 100);
+      text("Average Mirror Time:", 0, 500, 250, 100);
+      
+      textSize(26);
+      text(data.MirrorTime[yest].Time_Spent + " minutes", 0, 125, 200, 150);
+      text(data.MirrorTime[twodays].Time_Spent + " minutes", 0, 275, 200, 150);
+      text(data.MirrorTime[threedays].Time_Spent + " minutes", 0, 425, 200, 150);
+      text(((data.MirrorTime[yest].Time_Spent + data.MirrorTime[twodays].Time_Spent + data.MirrorTime[threedays].Time_Spent) / 3).toFixed(2) + " minutes", 0, 600, 250, 150);
+      
+      fill(color(0,100,200));
+      arc(200, 135, 40, 40, (3*PI/2), (data.MirrorTime[yest].Time_Spent / 60) * TAU, PIE);
+      arc(200, 285, 40, 40, (3*PI/2), (data.MirrorTime[twodays].Time_Spent / 60) * TAU, PIE);
+      arc(200, 435, 40, 40, (3*PI/2), (data.MirrorTime[threedays].Time_Spent / 60) * TAU, PIE);
+    }) 
+}
+
