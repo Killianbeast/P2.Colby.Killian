@@ -21,15 +21,21 @@ function setup() {
   line(windowWidth - 250, 500, windowWidth, 500);
   line(windowWidth - 250, 675, windowWidth, 675);
 
+  fill(255);
+  textSize(28);
+  textAlign(CENTER);
+  text("Set Color of Light", 0, 750, 250, 150);
   whiteBtn = createButton("White");
   whiteBtn.size(125,50);
   whiteBtn.position(0, 800);
+  whiteBtn.mouseClicked(setBtnWhite);
   yellowBtn = createButton("Yellow");
   yellowBtn.size(125,50);
   yellowBtn.position(125, 800);
-  
-  //weatherCall();
-  //newsCall();
+  yellowBtn.mouseClicked(setBtnYellow);
+
+  weatherCall();
+  newsCall();
   calendarCall();
   mirrorTime();
 }
@@ -151,3 +157,12 @@ function mirrorTime() {
     }) 
 }
 
+function setBtnWhite() {
+  fill(255);
+  rect(0, 900, 250, windowHeight);
+}
+
+function setBtnYellow() {
+  fill(150, 150, 75);
+  rect(0, 900, 250, windowHeight);
+}
