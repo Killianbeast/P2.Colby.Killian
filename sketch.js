@@ -98,7 +98,7 @@ function weatherCall() {
 }
 
 function newsCall() {
-  const newsURL = `https://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=${keys.NEWS_API_TOKEN}`
+  const newsURL = `https://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=e9d3e874d22749cdb877df0313645478`
   console.log("News API: " + newsURL);
   fetch(newsURL)
     .then((Response) => {
