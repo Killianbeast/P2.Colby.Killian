@@ -40,3 +40,9 @@ For the clock, the sketch grabs the current day, month, year, as well as the cur
 Finally, there are two buttons on the left side that activate a small light that the user can use to illuminate either white or yellow. This simply creates a square with the desired color at the bottom left. 
 
 For the Mirror Time, the same thing as before is true. There is a JSON file with days of the entire month and how much mirror time was used. The sketch grabs the current day, displays yesterday's, two days, and three days ago, and then averages them out over a three day interval. Pie charts are shown next to the times to show how much out of an hour per day the user used the mirror.
+
+# Video
+
+https://user-images.githubusercontent.com/80289258/202029464-1109a8c8-4872-498b-b1ce-11b7b103e5a6.mp4
+
+
